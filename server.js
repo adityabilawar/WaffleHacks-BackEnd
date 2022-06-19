@@ -44,7 +44,7 @@ app.get("/", (req, res) => {
 
 app.post("/invite_friends", (req, res) => {
   const { email } = req.body;
-  const API_KEY = "";
+  const API_KEY = process.env.API_KEY;
 
   const sg = require("@sendgrid/mail");
   sg.setApiKey(API_KEY);
