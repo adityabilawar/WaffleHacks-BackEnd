@@ -42,6 +42,31 @@ app.get("/", (req, res) => {
   res.status(200).send({ msg: "Hello" });
 });
 
+app.post("/invite_friends", (req, res) => {
+  const { email } = req.body;
+  const API_KEY = "";
+
+  const sg = require("@sendgrid/mail");
+  sg.setApiKey(API_KEY);
+
+  const message = {
+    to: email, //insert email from form over here
+    from: "climapmessage@gmail.com",
+    subject: "Invitation to join Musio",
+    text:
+      "Hello, you are invited to join this awesome Jam Session: " +
+      "https://62af2bf400d4dd0009863ca6--fascinating-cactus-25c883.netlify.app/meeting", //insert
+  };
+
+  sg.send(message)
+    .then(() => {
+      res.status(200).send({ msg: "Sent message" });
+    })
+    .catch((error) => {
+      res.status(404).send({ error: error.response.body });
+    });
+});
+
 // Room Calling
 const users = {};
 const socketToRoom = {};
